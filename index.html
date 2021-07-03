@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="script.js" type="module"></script>
+  </head>
+  <body>
+    <div class="p-4">
+      <h2 class="display-5 mb-4">axis <span class="fs-3">rest client</span></h2>
+      <form data-form>
+        <div class="input-group mb-4">
+          <select class="form-select flex-grow-0 w-auto" data-method>
+            <option value="GET" selected>GET</option>
+            <option value="POST">POST</option>
+            <option value="PUT">PUT</option>
+            <option value="PATCH">PATCH</option>
+            <option value="DELETE">DELETE</option>
+          </select>
+          <input
+            type="url"
+            class="form-control"
+            data-url
+            placeholder="https://api.domain.com"
+            required
+          />
+          <button type="submit" id="submitbtn" class="btn btn-primary">
+            Send
+          </button>
+        </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="header-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#header"
+              type="button"
+              role="tab"
+              aria-controls="header"
+              aria-selected="true"
+            >
+              Header
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="params-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#params"
+              type="button"
+              role="tab"
+              aria-controls="params"
+              aria-selected="false"
+            >
+              Params
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="body-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#body"
+              type="button"
+              role="tab"
+              aria-controls="body"
+              aria-selected="false"
+            >
+              Body
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content p-3 border-top-0 border" id="myTabContent">
+          <div
+            class="tab-pane fade show active"
+            id="header"
+            role="tabpanel"
+            aria-labelledby="header-tab"
+          >
+            <div data-header></div>
+            <button id="data-add-header" class="btn btn-outline-primary">
+              Add Headers
+            </button>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="params"
+            role="tabpanel"
+            aria-labelledby="params-tab"
+          >
+            <div data-params></div>
+            <button id="data-add-params" class="btn btn-outline-primary">
+              Add Params
+            </button>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="body"
+            role="tabpanel"
+            aria-labelledby="body-tab"
+          >
+            <div data-request-body class="overflow-auto"></div>
+          </div>
+        </div>
+      </form>
+      <div class="mt-4 d-none" data-response>
+        <h3 class="display-6">Response</h3>
+        <div class="d-flex my-3">
+          <div class="me-4">Status : <span data-status></span></div>
+          <div class="me-4">Time : <span data-time></span>ms</div>
+          <div class="me-4">Size : <span data-size></span></div>
+        </div>
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="response-body-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#response-body"
+              type="button"
+              role="tab"
+              aria-controls="response-body"
+              aria-selected="true"
+            >
+              Body
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="response-header-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#response-header"
+              type="button"
+              role="tab"
+              aria-controls="response-header"
+              aria-selected="false"
+            >
+              Header
+            </button>
+          </li>
+        </ul>
+        <div
+          class="tab-content border-top-0 border"
+          style="min-height: 50px; max-height: 200px"
+          id="myTabContent"
+        >
+          <div
+            class="tab-pane fade show active"
+            id="response-body"
+            role="tabpanel"
+            aria-labelledby="response-body-tab"
+          >
+            <div data-response-body class="overflow-scroll"></div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="response-header"
+            role="tabpanel"
+            aria-labelledby="response-header-tab"
+          >
+            <div
+              class="mx-3 my-2"
+              style="
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 0.5rem 2rem;
+              "
+              data-response-header
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- toast -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+      <div
+        class="toast align-items-center text-white bg-danger border-0"
+        id="errorToast"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="d-flex">
+          <div class="toast-body">Hello, world! This is a toast message.</div>
+          <button
+            type="button"
+            class="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
+    </div>
+    <template data-key-value-template>
+      <div data-key-value-pair class="input-group mb-2">
+        <input
+          type="text"
+          name="key"
+          class="form-control"
+          placeholder="Key"
+          data-key
+        />
+        <input
+          type="text"
+          name="value"
+          class="form-control"
+          placeholder="Value"
+          data-value
+        />
+        <button class="btn btn-outline-danger" id="remove-key-value">
+          Remove
+        </button>
+      </div>
+    </template>
+  </body>
+
+  <style>
+    #submitbtn {
+      background-color: #2bbbad;
+    }
+    #body-data {
+      max-height: 200px;
+    }
+  </style>
+</html>
