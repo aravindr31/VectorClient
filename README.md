@@ -1,3 +1,3 @@
 # Axis-Rest-Client
 Url
-https://aravindr597.gitlab.io/axis-rest-client
+http://vectorclient.surge.sh/
