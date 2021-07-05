@@ -28,8 +28,8 @@ const keyValuePair = () => {
 const createKeyValueObject = (container) => {
   const keyValues = container.querySelectorAll("[data-key-value-pair]");
   return [...keyValues].reduce((data, keyValue) => {
-    const key = keyValue.getElementById("key").value;
-    const value = keyValue.getElementById("value").value;
+    const key = keyValue.querySelector("[data-key]").value;
+    const value = keyValue.querySelector("[data-value]").value;
 
     if (key === "") return data;
 
